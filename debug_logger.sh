@@ -27,7 +27,6 @@ case $1 in
         </arguments>
     </type>
 </config>
-
 CATXML
 
         php bin/magento cache:clean
