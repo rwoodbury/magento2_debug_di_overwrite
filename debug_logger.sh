@@ -1,3 +1,15 @@
+#!/bin/bash
+
+# Install or remove flags for DB query and stack trace logger.
+
+case $1 in
+    ''|[Oo][Nn])
+        echo 'Turning on DB debug logger.'
+
+        # "app/etc" must exist
+        mkdir app/etc/dev
+
+        cat <<CATXML > app/etc/dev/di.xml
 <?xml version="1.0"?>
 <!--
 /**
@@ -15,3 +27,16 @@
         </arguments>
     </type>
 </config>
+
+CATXML
+
+        php bin/magento cache:clean
+        ;;
+
+
+    [Oo][Ff][Ff])
+        echo 'Turning off DB debug logger.'
+        rm -rf app/etc/dev
+        php bin/magento cache:clean
+        ;;
+esac
